@@ -1,0 +1,18 @@
+[
+	{
+		"ParameterKey": "EnvironmentName",
+		"ParameterValue": "cfcifewebapp"
+	},
+	{
+		"ParameterKey": "ServerAMIId",
+		"ParameterValue": "ami-0e081ed4ce61c1fb2"
+	},
+	{
+		"ParameterKey": "InstanceType",
+		"ParameterValue": "t3.medium"
+	},
+	{
+		"ParameterKey": "BucketName",
+		"ParameterValue": "cfcifes3bucket"
+	}
+]
