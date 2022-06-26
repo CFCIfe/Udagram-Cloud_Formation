@@ -5,14 +5,10 @@
 	},
 	{
 		"ParameterKey": "ServerAMIId",
-		"ParameterValue": "ami-0e081ed4ce61c1fb2"
+		"ParameterValue": "ami-0729e439b6769d6ab"
 	},
 	{
 		"ParameterKey": "InstanceType",
 		"ParameterValue": "t3.medium"
-	},
-	{
-		"ParameterKey": "BucketName",
-		"ParameterValue": "cfcifes3bucket"
 	}
 ]
