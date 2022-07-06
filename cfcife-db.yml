@@ -1,0 +1,81 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: >-
+  Description": "AWS CloudFormation Sample Template for creating an Amazon RDS DB instance: 
+  Sample template showing how to create a DB instance with Enhanced Monitoring enabled. 
+  **WARNING** This template creates an RDS DB instance. You will be billed for the AWS 
+  resources used if you create a stack from this template.
+
+Parameters:
+
+  EnvironmentName:
+    Description: An environment name that will be prefixed to my resource names
+    Type: String
+
+  MyDBInstanceClass:
+    Default: db.t2.micro
+    Description: DB instance class
+    Type: String
+    ConstraintDescription: Must select a valid DB instance type.
+
+  DBAllocatedStorage:
+    Default: '20'
+    Description: The size of the database (GiB)
+    Type: Number
+    MinValue: '20'
+    MaxValue: '65536'
+    ConstraintDescription: must be between 20 and 65536 GiB.
+
+  DBUsername:
+    Description: Username for MySQL database access
+    Type: String
+    MinLength: '1'
+    MaxLength: '16'
+    AllowedPattern: '[a-zA-Z][a-zA-Z0-9]*'
+
+  DBPassword:
+    Description: Password MySQL database access
+    Type: String
+    MinLength: '8'
+    MaxLength: '41'
+    AllowedPattern: '[a-zA-Z0-9]*'
+
+Resources:
+
+  DBSubnetGroup1:
+    Type: AWS::RDS::DBSubnetGroup
+    Properties: 
+      DBSubnetGroupDescription: Subnet group for the DB instance.
+      SubnetIds: 
+        - Fn::ImportValue: !Sub "${EnvironmentName}-PUB1-SN01"
+        - Fn::ImportValue: !Sub "${EnvironmentName}-PUB1-SN02"
+      Tags:
+        - Key: Name
+          Value: !Ref EnvironmentName
+  
+  MyDB: 
+    Type: "AWS::RDS::DBInstance"
+    Properties: 
+      VPCSecurityGroups: 
+        - sg-0ccdf53320f6e45e3
+      PubliclyAccessible: false
+      MultiAZ: false
+      AllocatedStorage: 
+        !Ref DBAllocatedStorage
+      DBInstanceClass: 
+        !Ref MyDBInstanceClass
+      Engine: "mysql"
+      MasterUsername: 
+        !Ref DBUsername
+      MasterUserPassword: 
+        !Ref DBPassword
+      DBSubnetGroupName: !Ref DBSubnetGroup1
+      Tags: 
+        - 
+          Key: "Name"
+          Value: !Sub "${EnvironmentName} MS SQL RDS"
+    DeletionPolicy: "Retain"
+
+Outputs:
+  InstanceId:
+    Description: The connection endpoint for the database
+    Value: !GetAtt MyDB.Endpoint.Address

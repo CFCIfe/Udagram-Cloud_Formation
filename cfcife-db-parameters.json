@@ -1,0 +1,14 @@
+[
+	{
+		"ParameterKey": "EnvironmentName",
+		"ParameterValue": "cfcifewebapp"
+	},
+    {
+        "ParameterKey": "DBPassword",
+        "ParameterValue": "hazarD1234"
+    },
+    {
+        "ParameterKey": "DBUsername",
+        "ParameterValue": "cfcifedb"
+    }
+]
